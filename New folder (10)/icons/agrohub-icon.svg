@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+	<defs>
+		<style>
+			.circle{fill:#2E7D32}
+			.sprout{fill:#fff}
+		</style>
+	</defs>
+	<circle class="circle" cx="256" cy="256" r="256"/>
+	<g class="sprout">
+		<rect x="238" y="236" width="36" height="140" rx="18"/>
+		<ellipse cx="196" cy="220" rx="86" ry="56" transform="rotate(-25 196 220)"/>
+		<ellipse cx="316" cy="220" rx="86" ry="56" transform="rotate(25 316 220)"/>
+	</g>
+</svg>

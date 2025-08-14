@@ -9,19 +9,16 @@
 	"description": "Connecting Ghana's farmers to buyers with secure payments and delivery.",
 	"icons": [
 		{
-			"src": "https://cdn.jsdelivr.net/gh/twitter/twemoji/assets/72x72/1f331.png",
-			"sizes": "72x72",
-			"type": "image/png"
+			"src": "icons/agrohub-icon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml",
+			"purpose": "any maskable"
 		},
 		{
-			"src": "https://cdn.jsdelivr.net/gh/twitter/twemoji/assets/128x128/1f331.png",
-			"sizes": "128x128",
-			"type": "image/png"
-		},
-		{
-			"src": "https://cdn.jsdelivr.net/gh/twitter/twemoji/assets/256x256/1f331.png",
-			"sizes": "256x256",
-			"type": "image/png"
+			"src": "icons/agrohub-icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any maskable"
 		}
 	]
 }
