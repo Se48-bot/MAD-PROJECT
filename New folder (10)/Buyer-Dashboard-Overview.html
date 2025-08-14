@@ -9,9 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
-<style>
-:where([class^="ri-"])::before { content: "\f3c2"; }
-</style>
+
 <script>
 tailwind.config = {
 theme: {
@@ -154,24 +152,12 @@ Sign Out
 </div>
 </header>
 <script src="Buyer-Dashboard-Overview.js"></script>
-<i class="ri-dashboard-line"></i>
-</div>
-Dashboard
-</a>
-<a href="#" class="flex items-center px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">
-<div class="w-5 h-5 flex items-center justify-center mr-3">
-<i class="ri-shopping-bag-line"></i>
-</div>
-My Orders
-</a>
-<a href="Agro-Connect-Hub-Ghana.html" class="w-8 h-8 flex items-center justify-center cursor-pointer">
-<div class="w-5 h-5 flex items-center justify-center mr-3">
-<i class="ri-store-line"></i>
-</div>
-Marketplace
-</a>
-</div>
-</div>
+<div id="mobileMenu" class="md:hidden fixed top-16 left-0 right-0 bg-white border-t border-gray-200 hidden z-40">
+	<div class="p-4 space-y-2">
+		<a href="#" class="block px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Dashboard</a>
+		<a href="#" class="block px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">My Orders</a>
+		<a href="Agro-Connect-Hub-Ghana.html" class="block px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">Marketplace</a>
+	</div>
 </div>
 <div class="flex pt-16">
 <!-- Sidebar -->
@@ -696,7 +682,7 @@ Checkout
 <img src="https://readdy.ai/api/search-image?query=Fresh%20orange%20carrots%20in%20wooden%20crate%2C%20root%20vegetables%2C%20organic%20farming%2C%20natural%20lighting%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20healthy%20produce%2C%20farm%20to%20table&width=120&height=120&seq=recent6&orientation=squarish" alt="Carrots" class="w-full h-full object-cover object-top">
 </div>
 <p class="text-sm font-medium text-gray-900">Carrots</p>
-<p class="text-xs text-gray-600">₺7.50/kg</p>
+<p class="text-xs text-gray-600">₵7.50/kg</p>
 </div>
 </div>
 </div>
