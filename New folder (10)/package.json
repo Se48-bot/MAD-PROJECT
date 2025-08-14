@@ -1,0 +1,21 @@
+{
+	"name": "agro-connect-hub-ghana",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Agro Connect Hub Ghana web + PWA + Capacitor wrapper",
+	"scripts": {
+		"cap:init": "npx cap init agro-connect-hub-ghana gh.agro.connect --web-dir=\"New folder (10)\"",
+		"cap:add:android": "npx cap add android",
+		"cap:add:ios": "npx cap add ios",
+		"cap:copy": "npx cap copy",
+		"cap:sync": "npx cap sync",
+		"cap:open:android": "npx cap open android",
+		"cap:open:ios": "npx cap open ios"
+	},
+	"devDependencies": {
+		"@capacitor/cli": "^6.1.2"
+	},
+	"dependencies": {
+		"@capacitor/core": "^6.1.2"
+	}
+}

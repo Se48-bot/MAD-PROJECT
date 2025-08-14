@@ -89,3 +89,33 @@ JavaScript: For all interactive elements and API integrations.
 Tailwind CSS: The styling framework used for the user interface.
 
 Remixicon: An open-source icon library.
+
+# Agro Connect Hub Ghana
+
+## PWA (installable web app)
+- Files added: `manifest.webmanifest`, `service-worker.js`, `pwa-register.js`
+- Homepage `<head>` now links the manifest and registers the SW.
+
+How to test locally (simple):
+1. Serve over HTTPS or use a local web server.
+2. Open `New folder (10)/Agro-Connect-Hub-Ghana.html`.
+3. In Chrome: Application tab → Manifest shows install prompt when criteria met.
+
+## Capacitor (Android/iOS wrapper)
+1. Install Node.js 18+.
+2. In project root:
+   ```bash
+   npm install
+   npm run cap:init # initializes if needed
+   npm run cap:add:android
+   npm run cap:add:ios  # optional on macOS with Xcode
+   npm run cap:sync
+   npm run cap:open:android  # opens Android Studio
+   # or
+   npm run cap:open:ios      # opens Xcode
+   ```
+3. Build/sign with the native IDEs.
+
+Notes:
+- `capacitor.config.ts` uses `New folder (10)` as the web directory.
+- Replace the icon URLs in `manifest.webmanifest` with your own assets when ready.
