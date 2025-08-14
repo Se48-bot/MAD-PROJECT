@@ -42,12 +42,17 @@ DEFAULT: '8px',
 <header class="bg-white shadow-sm fixed w-full top-0 z-50">
 <div class="container mx-auto px-4">
 <div class="flex items-center justify-between h-16">
-<div class="flex items-center space-x-3">
-<div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-<i class="ri-plant-line text-white text-xl"></i>
-</div>
-<a href="Agro-Connect-Hub-Ghana.html" class="w-8 h-8 flex items-center justify-center cursor-pointer">
-</div>
+		<div class="flex items-center space-x-3 min-w-0">
+			<a href="Agro-Connect-Hub-Ghana.html" class="flex items-center space-x-3 cursor-pointer">
+				<div class="w-9 h-9 sm:w-10 sm:h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+					<i class="ri-plant-line text-white text-xl"></i>
+				</div>
+				<div class="font-['Pacifico'] text-primary min-w-0">
+					<span class="hidden sm:block text-2xl truncate">Agro Connect Hub Ghana</span>
+					<span class="sm:hidden text-xl">AgroHub GH</span>
+				</div>
+			</a>
+		</div>
 <nav class="hidden md:flex items-center space-x-8">
 <a href="Agro-Connect-Hub-Ghana.html" class="text-gray-700 hover:text-primary transition-colors">Back to Home</a>
 
@@ -1415,6 +1420,15 @@ dot.classList.add('translate-x-6');
 }
 });
 });
+});
+</script>
+<script id="perf-improvements">
+document.addEventListener('DOMContentLoaded', function() {
+	document.querySelectorAll('img').forEach(function(img) {
+		if (!img.hasAttribute('loading')) {
+			img.setAttribute('loading', 'lazy');
+		}
+	});
 });
 </script>
 </body>
