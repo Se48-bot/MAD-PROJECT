@@ -5,12 +5,19 @@ Agro Connect Hub Ghana is a web-based platform designed to connect farmers, buye
 It provides dashboards for both buyers and farmers, enabling seamless transactions and market access.
 
 Features
+
 Main Site: This is the Overview of Agro Connect Hub Ghana and its mission.
+
 Buyer Dashboard: It provides market insights, purchase options, and communication tools for buyers.
+
 Farmer Dashboard: It allows farmers to list products, view buyer requests, and manage transactions.
+
 Interactive JavaScript Functionality: This part of the project improves user engagement and site navigation.
+
 Style custom slider componentfeat: Initialize Tailwind CSS and project structure
+
 This commit would set up the initial project files and integrate the Tailwind CSS CDN. It would also include the basic Tailwind configuration for custom colors and border radii.
+
 Add mobile menu functionality: This commit would add the JavaScript for the mobile menu toggle, allowing users to open and close the menu on smaller screens.
 
 Implement product view toggles: This commit would introduce the functionality to switch between grid and list views for the product display.
@@ -26,6 +33,7 @@ Modern UI with Tailwind CSS: A clean, responsive design built with the utility-f
 Interactive Product Display: Users can toggle between grid and list views to browse products.
 
 Dynamic Filters: Filtering options with interactive checkboxes and radio buter sidebar toggle, as well as the interactive behavior for checkboxes and radio buttons.
+
 This commit would add the dynamic CSS styling for the slider input element to match the project's visual theme.
 
 Setup REST API for authentication: This commit would lay the groundwork for backend ttons to refine product searches.
@@ -34,7 +42,9 @@ Responsive Navigation: A collapsible mobile menu for easy navigation on all devi
 
 REST API Integration:
     User Authentication: Secure login and registration functionality.
+    
     Product Management: Fetch and display a list of available agricultural products.
+    
     Order System: Create and view a history of orders.
 
 File Structure
@@ -54,14 +64,19 @@ Commit History
 
 -2025-07-01: Initial project setup with basic HTML structure for Agro Connect Hub Ghana
   - Files: Agro-Connect-Hub-Ghana.html
+
 -2025-07-03: Added JavaScript interactivity to main site
   - Files: Agro-Connect-Hub-Ghana.js
+
 -2025-07-05: Created Buyer Dashboard Overview page
   - Files: Buyer-Dashboard-Overview.html
+
 -2025-07-06: Added scripts for Buyer Dashboard interactivity
   - Files: Buyer-Dashboard-Overview.js
+
 -2025-07-08: Created Farmer Dashboard page
   - Files: Farmer-Dashboard.html
+
 -2025-07-09: Added VS Code workspace settings
   - Files: .vscode/settings.json
 
