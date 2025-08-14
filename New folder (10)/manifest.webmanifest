@@ -1,0 +1,24 @@
+{
+	"name": "Agro Connect Hub Ghana",
+	"short_name": "AgroHub GH",
+	"start_url": "Agro-Connect-Hub-Ghana.html",
+	"scope": "./",
+	"display": "standalone",
+	"background_color": "#ffffff",
+	"theme_color": "#2E7D32",
+	"description": "Connecting Ghana's farmers to buyers with secure payments and delivery.",
+	"icons": [
+		{
+			"src": "icons/agrohub-icon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml",
+			"purpose": "any maskable"
+		},
+		{
+			"src": "icons/agrohub-icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any maskable"
+		}
+	]
+}

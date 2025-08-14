@@ -9,23 +9,30 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
-<style>
-:where([class^="ri-"])::before { content: "\f3c2"; }
-</style>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#2E7D32">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="icons/agrohub-icon-512.png">
+
 <script src="Agro-Connect-Hub-Ghana.js"></script>
+<script defer src="pwa-register.js"></script>
 </head>
 <body class="bg-gray-50">
 <!-- Header -->
 <header class="bg-white shadow-sm fixed w-full top-0 z-50">
 <div class="container mx-auto px-4">
 <div class="flex items-center justify-between h-16">
-<!-- Logo -->
-<div class="flex items-center space-x-3">
-<div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-<i class="ri-plant-line text-white text-xl"></i>
-</div>
-<div onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="font-['Pacifico'] text-2xl text-primary cursor-pointer">Agro Connect Hub Ghana</div>
-</div>
+				<!-- Logo -->
+				<div class="flex items-center space-x-3 min-w-0">
+					<div class="w-9 h-9 sm:w-10 sm:h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+						<i class="ri-plant-line text-white text-xl"></i>
+					</div>
+					<div onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="font-['Pacifico'] text-primary cursor-pointer min-w-0">
+						<span class="hidden sm:block text-2xl truncate">Agro Connect Hub Ghana</span>
+						<span class="sm:hidden text-xl">AgroHub GH</span>
+					</div>
+				</div>
 <!-- Desktop Navigation -->
 <nav class="hidden md:flex items-center space-x-8">
 <a href="#marketplace" onclick="scrollToSection('marketplace-section')" class="text-gray-700 hover:text-primary transition-colors cursor-pointer">Marketplace</a>
@@ -48,10 +55,10 @@
 <option value="ga">Ga</option>
 </select>
 </div>
-<!-- Auth Buttons -->
-<div class="flex items-center space-x-2">
-<button class="px-4 py-2 text-primary border border-primary rounded-button hover:bg-primary hover:text-white transition-colors whitespace-nowrap cursor-pointer" onclick="showLoginModal()">Login</button>
-<button class="px-4 py-2 bg-primary text-white rounded-button hover:bg-green-700 transition-colors whitespace-nowrap cursor-pointer" onclick="showRegisterModal()">Register</button>
+				<!-- Auth Buttons -->
+				<div id="auth-buttons" class="hidden sm:flex items-center space-x-2">
+					<button class="px-4 py-2 text-primary border border-primary rounded-button hover:bg-primary hover:text-white transition-colors whitespace-nowrap cursor-pointer" onclick="showLoginModal()">Login</button>
+					<button class="px-4 py-2 bg-primary text-white rounded-button hover:bg-green-700 transition-colors whitespace-nowrap cursor-pointer" onclick="showRegisterModal()">Register</button>
 <!-- Login Modal -->
 <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
 <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
@@ -135,13 +142,18 @@
 <a href="#advice-section" onclick="scrollToSection('advice-section')" class="block text-gray-700 hover:text-primary cursor-pointer">Advice</a>
 <a href="#weather-section" onclick="scrollToSection('weather-section')" class="block text-gray-700 hover:text-primary cursor-pointer">Weather</a>
 <a href="#trust-section" onclick="scrollToSection('trust-section')" class="block text-gray-700 hover:text-primary cursor-pointer">About</a>
-<div class="pt-4 border-t">
-<select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm pr-8">
-<option>English</option>
-<option>Twi</option>
-<option>Ga</option>
-</select>
-</div>
+				<div class="pt-4 border-t">
+											<select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm pr-8">
+							<option>English</option>
+							<option>Twi</option>
+							<option>Ga</option>
+						</select>
+					</div>
+					<div class="pt-4 grid grid-cols-2 gap-3">
+						<button class="px-4 py-2 border border-primary text-primary rounded-button cursor-pointer" onclick="showLoginModal()">Login</button>
+						<button class="px-4 py-2 bg-primary text-white rounded-button cursor-pointer" onclick="showRegisterModal()">Register</button>
+					</div>
+				</div>
 </div>
 </div>
 </header>
@@ -1081,13 +1093,13 @@ Your transactions are protected with advanced security measures and our trusted 
 <div>
 <h3 class="text-xl font-semibold mb-6">Support</h3>
 <ul class="space-y-3">
-<li><a href="#http://wa.me//+233595278279" class="text-gray-300 hover:text-white transition-colors cursor-pointer">Help Center</a></li>
-<li><a href="#http://wa.me//+233595278279" class="text-gray-300 hover:text-white transition-colors cursor-pointer">Contact Us</a></li>
-<li><a href="#http://wa.me//+233595278279" class="text-gray-300 hover:text-white transition-colors cursor-pointer">Dispute Resolution</a></li>
-<li><a href="#http://wa.me//+233595278279" class="text-gray-300 hover:text-white transition-colors cursor-pointer">Payment Issues</a></li>
-<li><a href="#http://wa.me//+233595278279" class="text-gray-300 hover:text-white transition-colors cursor-pointer">Delivery Tracking</a></li>
-<li><a href="#http://wa.me//+233595278279" class="text-gray-300 hover:text-white transition-colors cursor-pointer">FAQ</a></li>
-<a class="text-gray-300" href="http://wa.me//+233595278279">Whatsapp</a>
+<li><a href="https://wa.me/233595278279" target="_blank" rel="noopener" class="text-gray-300 hover:text-white transition-colors cursor-pointer">Help Center</a></li>
+<li><a href="https://wa.me/233595278279" target="_blank" rel="noopener" class="text-gray-300 hover:text-white transition-colors cursor-pointer">Contact Us</a></li>
+<li><a href="https://wa.me/233595278279" target="_blank" rel="noopener" class="text-gray-300 hover:text-white transition-colors cursor-pointer">Dispute Resolution</a></li>
+<li><a href="https://wa.me/233595278279" target="_blank" rel="noopener" class="text-gray-300 hover:text-white transition-colors cursor-pointer">Payment Issues</a></li>
+<li><a href="https://wa.me/233595278279" target="_blank" rel="noopener" class="text-gray-300 hover:text-white transition-colors cursor-pointer">Delivery Tracking</a></li>
+<li><a href="https://wa.me/233595278279" target="_blank" rel="noopener" class="text-gray-300 hover:text-white transition-colors cursor-pointer">FAQ</a></li>
+<a class="text-gray-300" href="https://wa.me/233595278279" target="_blank" rel="noopener">Whatsapp</a>
 </ul>
 </div>
 <!-- Contact Info -->
@@ -1740,9 +1752,9 @@ Logging in...
 submitButton.disabled = true;
 // Simulate login process
 setTimeout(() => {
-// Update UI to show logged in state
-const authButtons = document.querySelector('.flex.items-center.space-x-2');
-const userEmail = form.querySelector('input[type="email"]').value;
+				// Update UI to show logged in state
+				const authButtons = document.getElementById('auth-buttons');
+				const userEmail = form.querySelector('input[type="email"]').value;
 const userName = userEmail.split('@')[0];
 authButtons.innerHTML = `
 <div class="flex items-center space-x-3">
@@ -1827,9 +1839,9 @@ Registering...
 submitButton.disabled = true;
 // Simulate registration process
 setTimeout(() => {
-// Update UI to show logged in state
-const authButtons = document.querySelector('.flex.items-center.space-x-2');
-authButtons.innerHTML = `
+				// Update UI to show logged in state
+				const authButtons = document.getElementById('auth-buttons');
+				authButtons.innerHTML = `
 <div class="flex items-center space-x-3">
 <button onclick="showProfileModal()" class="flex items-center space-x-3 hover:opacity-80 transition-opacity cursor-pointer">
 <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white">
@@ -1870,9 +1882,9 @@ submitButton.disabled = false;
 }, 1500);
 }
 // Add logout handler
-window.handleLogout = function() {
-const authButtons = document.querySelector('.flex.items-center.space-x-2');
-authButtons.innerHTML = `
+		window.handleLogout = function() {
+		const authButtons = document.getElementById('auth-buttons');
+		authButtons.innerHTML = `
 <button class="px-4 py-2 text-primary border border-primary rounded-button hover:bg-primary hover:text-white transition-colors whitespace-nowrap cursor-pointer" onclick="showLoginModal()">Login</button>
 <button class="px-4 py-2 bg-primary text-white rounded-button hover:bg-green-700 transition-colors whitespace-nowrap cursor-pointer" onclick="showRegisterModal()">Register</button>
 `;
@@ -2011,10 +2023,10 @@ Saving...
 submitButton.disabled = true;
 setTimeout(() => {
 const name = document.getElementById('profileName').value;
-const email = document.getElementById('profileEmail').value;
-const userType = document.getElementById('profileUserType').value;
-const authButtons = document.querySelector('.flex.items-center.space-x-2');
-authButtons.innerHTML = `
+			const email = document.getElementById('profileEmail').value;
+			const userType = document.getElementById('profileUserType').value;
+			const authButtons = document.getElementById('auth-buttons');
+			authButtons.innerHTML = `
 <div class="flex items-center space-x-3">
 <button onclick="showProfileModal()" class="flex items-center space-x-3 hover:opacity-80 transition-opacity cursor-pointer">
 <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white">
@@ -2065,6 +2077,15 @@ modal.classList.add('hidden');
 }
 });
 });
+});
+</script>
+<script id="perf-improvements">
+document.addEventListener('DOMContentLoaded', function() {
+	document.querySelectorAll('img').forEach(function(img) {
+		if (!img.hasAttribute('loading')) {
+			img.setAttribute('loading', 'lazy');
+		}
+	});
 });
 </script>
 </body>
