@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buyer Dashboard - Agro Connect Hub Ghana</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+</style>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary: '#2E7D32',
+secondary: '#795548'
+},
+borderRadius: {
+'none': '0px',
+'sm': '4px',
+DEFAULT: '8px',
+'md': '12px',
+'lg': '16px',
+'xl': '20px',
+'2xl': '24px',
+'3xl': '32px',
+'full': '9999px',
+'button': '8px'
+}
+}
+}
+}
+</script>
+</head>
+<body class="bg-gray-50">
+<div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[60] hidden">
+<div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+<div class="text-center mb-8">
+<h2 class="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h2>
+<p class="text-gray-600">Sign in to access your buyer dashboard</p>
+</div>
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+<input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Enter your email">
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+<input type="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Enter your password">
+</div>
+<button onclick="handleLogin()" class="w-full bg-primary text-white py-2 rounded-button hover:bg-green-700 transition-colors">Sign In</button>
+<div class="text-center">
+<span class="text-sm text-gray-600">Don't have an account?</span>
+<button onclick="toggleAuthMode()" class="text-sm text-primary hover:text-green-700 ml-1">Sign Up</button>
+</div>
+</div>
+<button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+<i class="ri-close-line text-xl"></i>
+</button>
+</div>
+</div>
+<!-- Header -->
+<header class="bg-white shadow-sm fixed w-full top-0 z-50">
+<div class="container mx-auto px-4">
+<div class="flex items-center justify-between h-16">
+<!-- Logo -->
+<div class="flex items-center space-x-3">
+<a href="Agro-Connect-Hub-Ghana.html" class="w-8 h-8 flex items-center justify-center cursor-pointer">
+<div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+<i class="ri-plant-line text-white text-xl"></i>
+</div>
+<div class="font-['Pacifico'] text-2xl text-primary">Agro Connect Hub Ghana</div>
+</a>
+</div>
+<!-- Search Bar -->
+<div class="hidden md:flex flex-1 max-w-2xl mx-8">
+<div class="relative w-full">
+<input type="text" placeholder="Search for fresh produce, farmers, or categories..." class="w-full pl-12 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-sm">
+<div class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center">
+<i class="ri-search-line text-gray-400"></i>
+</div>
+</div>
+</div>
+<!-- Right Side -->
+<div class="flex items-center space-x-4">
+<!-- Notifications -->
+<div class="relative">
+<button class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+<i class="ri-notification-line text-gray-600"></i>
+</button>
+<div class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+<span class="text-xs text-white font-medium">3</span>
+</div>
+</div>
+<!-- Shopping Cart -->
+<div class="relative">
+<button class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+<i class="ri-shopping-cart-line text-gray-600"></i>
+</button>
+<div class="absolute -top-1 -right-1 w-5 h-5 bg-primary rounded-full flex items-center justify-center">
+<span class="text-xs text-white font-medium">5</span>
+</div>
+</div>
+<!-- Profile Dropdown -->
+<div class="relative">
+<button class="flex items-center space-x-2 hover:bg-gray-100 rounded-lg px-3 py-2 transition-colors" onclick="toggleProfileDropdown()">
+<div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+<span class="text-white text-sm font-medium" id="userInitials"></span>
+</div>
+<span class="hidden md:block text-gray-700 font-medium" id="userName"></span>
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-arrow-down-s-line text-gray-500"></i>
+</div>
+</button>
+<div id="profileDropdown" class="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 hidden">
+<div class="py-2">
+<a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-user-line"></i>
+</div>
+Profile Settings
+</a>
+<a href="Agro-Connect-Hub-Ghana.html" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50">
+  <div class="w-5 h-5 flex items-center justify-center mr-3">
+    <i class="ri-store-line"></i>
+  </div>
+  Back to Marketplace
+</a>
+<div class="border-t border-gray-200 my-1"></div>
+<a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-50">
+  <div class="w-5 h-5 flex items-center justify-center mr-3">
+    <i class="ri-logout-box-line"></i>
+  </div>
+
+Sign Out
+</a>
+</div>
+</div>
+</div>
+<!-- Mobile Menu Button -->
+<button class="md:hidden p-2" onclick="toggleMobileMenu()">
+<i class="ri-menu-line text-xl"></i>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- Mobile Menu -->
+<div id="mobileMenu" class="md:hidden fixed top-16 left-0 right-0 bg-white border-b border-gray-200 z-40 hidden">
+<div class="px-4 py-4">
+<div class="relative mb-4">
+<input type="text" placeholder="Search products..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-sm">
+<div class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 flex items-center justify-center">
+<i class="ri-search-line text-gray-400"></i>
+</div>
+</div>
+<div class="space-y-2">
+<a href="#" class="flex items-center px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-dashboard-line"></i>
+</div>
+Dashboard
+</a>
+<a href="#" class="flex items-center px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-lg">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-shopping-bag-line"></i>
+</div>
+My Orders
+</a>
+<a href="Agro-Connect-Hub-Ghana.html" class="w-8 h-8 flex items-center justify-center cursor-pointer">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-store-line"></i>
+</div>
+Marketplace
+</a>
+</div>
+</div>
+</div>
+<div class="flex pt-16">
+<!-- Sidebar -->
+<div class="hidden lg:flex w-64 bg-white shadow-sm min-h-screen">
+<div class="w-full p-6">
+<nav class="space-y-2">
+<a href="#" class="flex items-center px-4 py-3 text-primary bg-primary/10 rounded-lg font-medium">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-dashboard-line"></i>
+</div>
+Dashboard
+</a>
+<a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-shopping-bag-line"></i>
+</div>
+My Orders
+</a>
+<a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-heart-line"></i>
+</div>
+Favorites
+</a>
+<a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-shopping-cart-line"></i>
+</div>
+Shopping Cart
+</a>
+<a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-search-line"></i>
+</div>
+Saved Searches
+</a>
+<a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-map-pin-line"></i>
+</div>
+Addresses
+</a>
+<a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+<div class="w-5 h-5 flex items-center justify-center mr-3">
+<i class="ri-bank-card-line"></i>
+</div>
+Payment Methods
+</a>
+<div class="border-t border-gray-200 my-4"></div>
+<div class="px-4 py-2">
+<h3 class="text-sm font-medium text-gray-500 mb-3">CATEGORIES</h3>
+<div class="space-y-1">
+<a href="#" class="flex items-center py-2 text-gray-600 hover:text-primary transition-colors">
+<div class="w-4 h-4 flex items-center justify-center mr-2">
+<i class="ri-plant-line text-sm"></i>
+</div>
+Vegetables
+</a>
+<a href="#" class="flex items-center py-2 text-gray-600 hover:text-primary transition-colors">
+<div class="w-4 h-4 flex items-center justify-center mr-2">
+<i class="ri-apple-line text-sm"></i>
+</div>
+Fruits
+</a>
+<a href="#" class="flex items-center py-2 text-gray-600 hover:text-primary transition-colors">
+<div class="w-4 h-4 flex items-center justify-center mr-2">
+<i class="ri-seedling-line text-sm"></i>
+</div>
+Grains
+</a>
+<a href="#" class="flex items-center py-2 text-gray-600 hover:text-primary transition-colors">
+<div class="w-4 h-4 flex items-center justify-center mr-2">
+<i class="ri-leaf-line text-sm"></i>
+</div>
+Tubers
+</a>
+</div>
+</div>
+</nav>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 p-6">
+<!-- Welcome Section -->
+<div class="mb-8">
+<h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome back, <span id="welcomeName"></span>!</h1>
+<p class="text-gray-600">Here's what's happening with your orders and recommendations.</p>
+</div>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="bg-white rounded-xl p-6 shadow-sm">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm text-gray-600 mb-1">Total Orders</p>
+<p class="text-2xl font-bold text-gray-900">24</p>
+</div>
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+<i class="ri-shopping-bag-line text-primary text-xl"></i>
+</div>
+</div>
+<div class="mt-4 flex items-center text-sm">
+<span class="text-green-600 font-medium">+12%</span>
+<span class="text-gray-500 ml-1">from last month</span>
+</div>
+</div>
+<div class="bg-white rounded-xl p-6 shadow-sm">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm text-gray-600 mb-1">Total Spent</p>
+<p class="text-2xl font-bold text-gray-900">₵1,250</p>
+</div>
+<div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+<i class="ri-money-dollar-circle-line text-yellow-600 text-xl"></i>
+</div>
+</div>
+<div class="mt-4 flex items-center text-sm">
+<span class="text-green-600 font-medium">+8%</span>
+<span class="text-gray-500 ml-1">from last month</span>
+</div>
+</div>
+<div class="bg-white rounded-xl p-6 shadow-sm">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm text-gray-600 mb-1">Favorite Items</p>
+<p class="text-2xl font-bold text-gray-900">18</p>
+</div>
+<div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+<i class="ri-heart-line text-red-600 text-xl"></i>
+</div>
+</div>
+<div class="mt-4 flex items-center text-sm">
+<span class="text-green-600 font-medium">+3</span>
+<span class="text-gray-500 ml-1">new this week</span>
+</div>
+</div>
+<div class="bg-white rounded-xl p-6 shadow-sm">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm text-gray-600 mb-1">Saved Searches</p>
+<p class="text-2xl font-bold text-gray-900">7</p>
+</div>
+<div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+<i class="ri-search-line text-blue-600 text-xl"></i>
+</div>
+</div>
+<div class="mt-4 flex items-center text-sm">
+<span class="text-gray-500">Active alerts</span>
+</div>
+</div>
+</div>
+<!-- Main Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column -->
+<div class="lg:col-span-2 space-y-8">
+<!-- Recent Orders -->
+<div class="bg-white rounded-xl shadow-sm">
+<div class="p-6 border-b border-gray-200">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-semibold text-gray-900">Recent Orders</h2>
+<a href="#" class="text-primary hover:text-green-700 font-medium">View All</a>
+</div>
+</div>
+<div class="p-6">
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+<div class="flex items-center space-x-4">
+<div class="w-12 h-12 bg-gray-200 rounded-lg overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Fresh%20ripe%20red%20tomatoes%20in%20wooden%20basket%2C%20natural%20lighting%2C%20farm%20fresh%20produce%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20vibrant%20red%20color%2C%20organic%20vegetables&width=100&height=100&seq=order1&orientation=squarish" alt="Tomatoes" class="w-full h-full object-cover object-top">
+</div>
+<div>
+<h3 class="font-medium text-gray-900">Fresh Tomatoes</h3>
+<p class="text-sm text-gray-600">5kg • Kwame Asante</p>
+<p class="text-sm text-gray-500">Order #AGH-2024-001</p>
+</div>
+</div>
+<div class="text-right">
+<div class="flex items-center space-x-2 mb-1">
+<span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">Delivered</span>
+</div>
+<p class="text-lg font-semibold text-gray-900">₵22.50</p>
+<p class="text-sm text-gray-500">Jan 8, 2025</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+<div class="flex items-center space-x-4">
+<div class="w-12 h-12 bg-gray-200 rounded-lg overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Golden%20yellow%20maize%20corn%20cobs%20in%20woven%20basket%2C%20traditional%20African%20farming%2C%20natural%20sunlight%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20organic%20grains%2C%20harvest%20season&width=100&height=100&seq=order2&orientation=squarish" alt="Maize" class="w-full h-full object-cover object-top">
+</div>
+<div>
+<h3 class="font-medium text-gray-900">Golden Maize</h3>
+<p class="text-sm text-gray-600">10kg • Ama Osei</p>
+<p class="text-sm text-gray-500">Order #AGH-2024-002</p>
+</div>
+</div>
+<div class="text-right">
+<div class="flex items-center space-x-2 mb-1">
+<span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded-full">In Transit</span>
+</div>
+<p class="text-lg font-semibold text-gray-900">₵32.00</p>
+<p class="text-sm text-gray-500">Jan 10, 2025</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+<div class="flex items-center space-x-4">
+<div class="w-12 h-12 bg-gray-200 rounded-lg overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Fresh%20yam%20tubers%20in%20traditional%20basket%2C%20brown%20skin%20texture%2C%20farm%20fresh%20produce%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20organic%20root%20vegetables%2C%20Ghanaian%20agriculture&width=100&height=100&seq=order3&orientation=squarish" alt="Yam" class="w-full h-full object-cover object-top">
+</div>
+<div>
+<h3 class="font-medium text-gray-900">Fresh Yam</h3>
+<p class="text-sm text-gray-600">3kg • Kofi Mensah</p>
+<p class="text-sm text-gray-500">Order #AGH-2024-003</p>
+</div>
+</div>
+<div class="text-right">
+<div class="flex items-center space-x-2 mb-1">
+<span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">Processing</span>
+</div>
+<p class="text-lg font-semibold text-gray-900">₵24.00</p>
+<p class="text-sm text-gray-500">Jan 11, 2025</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recommended Products -->
+<div class="bg-white rounded-xl shadow-sm">
+<div class="p-6 border-b border-gray-200">
+<h2 class="text-xl font-semibold text-gray-900">Recommended for You</h2>
+<p class="text-sm text-gray-600 mt-1">Based on your purchase history</p>
+</div>
+<div class="p-6">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+<div class="aspect-square mb-3 overflow-hidden rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=Fresh%20green%20okra%20vegetables%20in%20basket%2C%20organic%20farming%2C%20natural%20lighting%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20healthy%20vegetables%2C%20African%20cuisine%20ingredients&width=200&height=200&seq=rec1&orientation=squarish" alt="Okra" class="w-full h-full object-cover object-top">
+</div>
+<h3 class="font-medium text-gray-900 mb-1">Fresh Okra</h3>
+<p class="text-sm text-gray-600 mb-2">Yaw Opoku • 4.8★</p>
+<div class="flex items-center justify-between">
+<span class="text-lg font-semibold text-primary">₵6.20/kg</span>
+<button class="px-3 py-1 bg-primary text-white text-sm rounded-button hover:bg-green-700 transition-colors whitespace-nowrap">
+Add to Cart
+</button>
+</div>
+</div>
+<div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+<div class="aspect-square mb-3 overflow-hidden rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=Fresh%20orange%20carrots%20in%20wooden%20crate%2C%20root%20vegetables%2C%20organic%20farming%2C%20natural%20lighting%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20healthy%20produce%2C%20farm%20to%20table&width=200&height=200&seq=rec2&orientation=squarish" alt="Carrots" class="w-full h-full object-cover object-top">
+</div>
+<h3 class="font-medium text-gray-900 mb-1">Fresh Carrots</h3>
+<p class="text-sm text-gray-600 mb-2">Efua Adjei • 4.6★</p>
+<div class="flex items-center justify-between">
+<span class="text-lg font-semibold text-primary">₵7.50/kg</span>
+<button class="px-3 py-1 bg-primary text-white text-sm rounded-button hover:bg-green-700 transition-colors whitespace-nowrap">
+Add to Cart
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column -->
+<div class="space-y-8">
+<!-- Shopping Cart Summary -->
+<div class="bg-white rounded-xl shadow-sm">
+<div class="p-6 border-b border-gray-200">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-semibold text-gray-900">Shopping Cart</h2>
+<span class="px-2 py-1 bg-primary text-white text-xs font-medium rounded-full">5 items</span>
+</div>
+</div>
+<div class="p-6">
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 bg-gray-200 rounded overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Ripe%20yellow%20plantains%20in%20woven%20basket%2C%20tropical%20fruit%2C%20natural%20lighting%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20organic%20produce%2C%20traditional%20African%20food&width=80&height=80&seq=cart1&orientation=squarish" alt="Plantain" class="w-full h-full object-cover object-top">
+</div>
+<div>
+<p class="font-medium text-gray-900 text-sm">Plantain</p>
+<p class="text-xs text-gray-600">2kg</p>
+</div>
+</div>
+<span class="text-sm font-medium text-gray-900">₵11.60</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 bg-gray-200 rounded overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Fresh%20ripe%20red%20tomatoes%20in%20wooden%20basket%2C%20natural%20lighting%2C%20farm%20fresh%20produce%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20vibrant%20red%20color%2C%20organic%20vegetables&width=80&height=80&seq=cart2&orientation=squarish" alt="Tomatoes" class="w-full h-full object-cover object-top">
+</div>
+<div>
+<p class="font-medium text-gray-900 text-sm">Tomatoes</p>
+<p class="text-xs text-gray-600">3kg</p>
+</div>
+</div>
+<span class="text-sm font-medium text-gray-900">₵13.50</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 bg-gray-200 rounded overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Fresh%20green%20okra%20vegetables%20in%20basket%2C%20organic%20farming%2C%20natural%20lighting%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20healthy%20vegetables%2C%20African%20cuisine%20ingredients&width=80&height=80&seq=cart3&orientation=squarish" alt="Okra" class="w-full h-full object-cover object-top">
+</div>
+<div>
+<p class="font-medium text-gray-900 text-sm">Okra</p>
+<p class="text-xs text-gray-600">1kg</p>
+</div>
+</div>
+<span class="text-sm font-medium text-gray-900">₵6.20</span>
+</div>
+</div>
+<div class="border-t border-gray-200 pt-4 mt-4">
+<div class="flex items-center justify-between mb-3">
+<span class="font-medium text-gray-900">Total</span>
+<span class="text-lg font-bold text-primary">₵31.30</span>
+</div>
+<button class="w-full bg-primary text-white py-2 rounded-button hover:bg-green-700 transition-colors whitespace-nowrap">
+Checkout
+</button>
+</div>
+</div>
+</div>
+<!-- Favorite Products -->
+<div class="bg-white rounded-xl shadow-sm">
+<div class="p-6 border-b border-gray-200">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-semibold text-gray-900">Favorite Products</h2>
+<a href="#" class="text-primary hover:text-green-700 font-medium">View All</a>
+</div>
+</div>
+<div class="p-6">
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 bg-gray-200 rounded overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Fresh%20ripe%20red%20tomatoes%20in%20wooden%20basket%2C%20natural%20lighting%2C%20farm%20fresh%20produce%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20vibrant%20red%20color%2C%20organic%20vegetables&width=80&height=80&seq=fav1&orientation=squarish" alt="Tomatoes" class="w-full h-full object-cover object-top">
+</div>
+<div>
+<p class="font-medium text-gray-900 text-sm">Fresh Tomatoes</p>
+<p class="text-xs text-gray-600">Kwame Asante</p>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<span class="text-sm font-medium text-primary">₵4.50/kg</span>
+<button class="w-6 h-6 flex items-center justify-center">
+<i class="ri-heart-fill text-red-500"></i>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 bg-gray-200 rounded overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Fresh%20yam%20tubers%20in%20traditional%20basket%2C%20brown%20skin%20texture%2C%20farm%20fresh%20produce%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20organic%20root%20vegetables%2C%20Ghanaian%20agriculture&width=80&height=80&seq=fav2&orientation=squarish" alt="Yam" class="w-full h-full object-cover object-top">
+</div>
+<div>
+<p class="font-medium text-gray-900 text-sm">Fresh Yam</p>
+<p class="text-xs text-gray-600">Kofi Mensah</p>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<span class="text-sm font-medium text-primary">₵8.00/kg</span>
+<button class="w-6 h-6 flex items-center justify-center">
+<i class="ri-heart-fill text-red-500"></i>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 bg-gray-200 rounded overflow-hidden">
+<img src="https://readdy.ai/api/search-image?query=Golden%20yellow%20maize%20corn%20cobs%20in%20woven%20basket%2C%20traditional%20African%20farming%2C%20natural%20sunlight%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20organic%20grains%2C%20harvest%20season&width=80&height=80&seq=fav3&orientation=squarish" alt="Maize" class="w-full h-full object-cover object-top">
+</div>
+<div>
+<p class="font-medium text-gray-900 text-sm">Golden Maize</p>
+<p class="text-xs text-gray-600">Ama Osei</p>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<span class="text-sm font-medium text-primary">₵3.20/kg</span>
+<button class="w-6 h-6 flex items-center justify-center">
+<i class="ri-heart-fill text-red-500"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Saved Searches -->
+<div class="bg-white rounded-xl shadow-sm">
+<div class="p-6 border-b border-gray-200">
+<h2 class="text-xl font-semibold text-gray-900">Saved Searches</h2>
+</div>
+<div class="p-6">
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+<i class="ri-search-line text-primary text-sm"></i>
+</div>
+<div>
+<p class="font-medium text-gray-900 text-sm">Organic tomatoes</p>
+<p class="text-xs text-gray-600">3 new results</p>
+</div>
+</div>
+<button class="text-primary hover:text-green-700">
+<i class="ri-arrow-right-line"></i>
+</button>
+</div>
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+<i class="ri-search-line text-primary text-sm"></i>
+</div>
+<div>
+<p class="font-medium text-gray-900 text-sm">Yam under ₵7</p>
+<p class="text-xs text-gray-600">1 new result</p>
+</div>
+</div>
+<button class="text-primary hover:text-green-700">
+<i class="ri-arrow-right-line"></i>
+</button>
+</div>
+<div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+<i class="ri-search-line text-primary text-sm"></i>
+</div>
+<div>
+<p class="font-medium text-gray-900 text-sm">Kumasi farmers</p>
+<p class="text-xs text-gray-600">No new results</p>
+</div>
+</div>
+<button class="text-primary hover:text-green-700">
+<i class="ri-arrow-right-line"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Actions -->
+<div class="bg-white rounded-xl shadow-sm">
+<div class="p-6 border-b border-gray-200">
+<h2 class="text-xl font-semibold text-gray-900">Quick Actions</h2>
+</div>
+<div class="p-6">
+<div class="space-y-3">
+<button class="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+<i class="ri-map-pin-line text-blue-600 text-sm"></i>
+</div>
+<span class="font-medium text-gray-900 text-sm">Manage Addresses</span>
+</div>
+<i class="ri-arrow-right-line text-gray-400"></i>
+</button>
+<button class="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+<i class="ri-bank-card-line text-green-600 text-sm"></i>
+</div>
+<span class="font-medium text-gray-900 text-sm">Payment Methods</span>
+</div>
+<i class="ri-arrow-right-line text-gray-400"></i>
+</button>
+<button class="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+<i class="ri-customer-service-line text-purple-600 text-sm"></i>
+</div>
+<span class="font-medium text-gray-900 text-sm">Support Center</span>
+</div>
+<i class="ri-arrow-right-line text-gray-400"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recently Viewed -->
+<div class="bg-white rounded-xl shadow-sm mt-8">
+<div class="p-6 border-b border-gray-200">
+<h2 class="text-xl font-semibold text-gray-900">Recently Viewed</h2>
+</div>
+<div class="p-6">
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+<div class="text-center">
+<div class="aspect-square mb-2 overflow-hidden rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=Fresh%20ripe%20red%20tomatoes%20in%20wooden%20basket%2C%20natural%20lighting%2C%20farm%20fresh%20produce%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20vibrant%20red%20color%2C%20organic%20vegetables&width=120&height=120&seq=recent1&orientation=squarish" alt="Tomatoes" class="w-full h-full object-cover object-top">
+</div>
+<p class="text-sm font-medium text-gray-900">Tomatoes</p>
+<p class="text-xs text-gray-600">₵4.50/kg</p>
+</div>
+<div class="text-center">
+<div class="aspect-square mb-2 overflow-hidden rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=Golden%20yellow%20maize%20corn%20cobs%20in%20woven%20basket%2C%20traditional%20African%20farming%2C%20natural%20sunlight%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20organic%20grains%2C%20harvest%20season&width=120&height=120&seq=recent2&orientation=squarish" alt="Maize" class="w-full h-full object-cover object-top">
+</div>
+<p class="text-sm font-medium text-gray-900">Maize</p>
+<p class="text-xs text-gray-600">₵3.20/kg</p>
+</div>
+<div class="text-center">
+<div class="aspect-square mb-2 overflow-hidden rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=Fresh%20yam%20tubers%20in%20traditional%20basket%2C%20brown%20skin%20texture%2C%20farm%20fresh%20produce%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20organic%20root%20vegetables%2C%20Ghanaian%20agriculture&width=120&height=120&seq=recent3&orientation=squarish" alt="Yam" class="w-full h-full object-cover object-top">
+</div>
+<p class="text-sm font-medium text-gray-900">Yam</p>
+<p class="text-xs text-gray-600">₵8.00/kg</p>
+</div>
+<div class="text-center">
+<div class="aspect-square mb-2 overflow-hidden rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=Ripe%20yellow%20plantains%20in%20woven%20basket%2C%20tropical%20fruit%2C%20natural%20lighting%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20organic%20produce%2C%20traditional%20African%20food&width=120&height=120&seq=recent4&orientation=squarish" alt="Plantain" class="w-full h-full object-cover object-top">
+</div>
+<p class="text-sm font-medium text-gray-900">Plantain</p>
+<p class="text-xs text-gray-600">₵5.80/kg</p>
+</div>
+<div class="text-center">
+<div class="aspect-square mb-2 overflow-hidden rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=Fresh%20green%20okra%20vegetables%20in%20basket%2C%20organic%20farming%2C%20natural%20lighting%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20healthy%20vegetables%2C%20African%20cuisine%20ingredients&width=120&height=120&seq=recent5&orientation=squarish" alt="Okra" class="w-full h-full object-cover object-top">
+</div>
+<p class="text-sm font-medium text-gray-900">Okra</p>
+<p class="text-xs text-gray-600">₵6.20/kg</p>
+</div>
+<div class="text-center">
+<div class="aspect-square mb-2 overflow-hidden rounded-lg">
+<img src="https://readdy.ai/api/search-image?query=Fresh%20orange%20carrots%20in%20wooden%20crate%2C%20root%20vegetables%2C%20organic%20farming%2C%20natural%20lighting%2C%20clean%20white%20background%2C%20high%20quality%20photography%2C%20healthy%20produce%2C%20farm%20to%20table&width=120&height=120&seq=recent6&orientation=squarish" alt="Carrots" class="w-full h-full object-cover object-top">
+</div>
+<p class="text-sm font-medium text-gray-900">Carrots</p>
+<p class="text-xs text-gray-600">₺7.50/kg</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script id="auth-management">
+document.addEventListener('DOMContentLoaded', function() {
+let isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+let isLoginMode = true;
+const loggedInUser = JSON.parse(localStorage.getItem('user')) || {};
+function updateUserDisplay() {
+const userInitials = document.getElementById('userInitials');
+const userName = document.getElementById('userName');
+const welcomeName = document.getElementById('welcomeName');
+if(loggedInUser && loggedInUser.name && userInitials && userName && welcomeName) {
+const initials = loggedInUser.name.split(' ').map(n => n[0]).join('').toUpperCase();
+userInitials.textContent = initials;
+userName.textContent = loggedInUser.name;
+welcomeName.textContent = loggedInUser.name;
+}
+}
+if (isAuthenticated) {
+updateUserDisplay();
+}
+if (!isAuthenticated) {
+document.getElementById('authModal').classList.remove('hidden');
+}
+window.toggleAuthMode = function() {
+isLoginMode = !isLoginMode;
+const title = document.querySelector('#authModal h2');
+const subtitle = document.querySelector('#authModal p');
+const toggleText = document.querySelector('#authModal .text-gray-600');
+const toggleButton = document.querySelector('#authModal .text-primary');
+const submitButton = document.querySelector('#authModal .bg-primary');
+if (isLoginMode) {
+title.textContent = 'Welcome Back';
+subtitle.textContent = 'Sign in to access your buyer dashboard';
+toggleText.textContent = "Don't have an account?";
+toggleButton.textContent = 'Sign Up';
+submitButton.textContent = 'Sign In';
+} else {
+title.textContent = 'Create Account';
+subtitle.textContent = 'Sign up to start buying fresh produce';
+toggleText.textContent = 'Already have an account?';
+toggleButton.textContent = 'Sign In';
+submitButton.textContent = 'Sign Up';
+}
+}
+window.handleLogin = function() {
+const emailInput = document.querySelector('#authModal input[type="email"]');
+const passwordInput = document.querySelector('#authModal input[type="password"]');
+if (!emailInput.value || !passwordInput.value) {
+showNotification('Please enter both email and password');
+return;
+}
+const name = emailInput.value.split('@')[0].split('.').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+const user = {
+email: emailInput.value,
+name: name
+};
+localStorage.setItem('user', JSON.stringify(user));
+localStorage.setItem('isAuthenticated', 'true');
+document.getElementById('authModal').classList.add('hidden');
+updateUserDisplay();
+showNotification('Successfully signed in!');
+emailInput.value = '';
+passwordInput.value = '';
+}
+window.closeAuthModal = function() {
+if (!isAuthenticated) {
+window.location.href = "Agro-Connect-Hub-Ghana.html"
+document.getElementById('authModal').classList.add('hidden');
+}
+}
+function showNotification(message) {
+const notification = document.createElement('div');
+notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-300 translate-y-0';
+notification.textContent = message;
+document.body.appendChild(notification);
+setTimeout(() => {
+notification.classList.add('translate-y-full');
+setTimeout(() => notification.remove(), 300);
+}, 2000);
+}
+});
+</script>
+<script id="mobile-interactions">
+document.addEventListener('DOMContentLoaded', function() {
+window.toggleMobileMenu = function() {
+const mobileMenu = document.getElementById('mobileMenu');
+mobileMenu.classList.toggle('hidden');
+}
+window.toggleProfileDropdown = function() {
+const dropdown = document.getElementById('profileDropdown');
+dropdown.classList.toggle('hidden');
+}
+// Close dropdowns when clicking outside
+document.addEventListener('click', function(event) {
+const profileDropdown = document.getElementById('profileDropdown');
+const profileButton = event.target.closest('[onclick="toggleProfileDropdown()"]');
+if (!profileButton && !profileDropdown.contains(event.target)) {
+profileDropdown.classList.add('hidden');
+}
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileButton = event.target.closest('[onclick="toggleMobileMenu()"]');
+if (!mobileButton && !mobileMenu.contains(event.target)) {
+mobileMenu.classList.add('hidden');
+}
+});
+});
+</script>
+<script id="cart-management">
+document.addEventListener('DOMContentLoaded', function() {
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+function updateCart(product) {
+const existingProduct = cart.find(item => item.id === product.id);
+if (existingProduct) {
+existingProduct.quantity += 1;
+} else {
+cart.push({...product, quantity: 1});
+}
+localStorage.setItem('cart', JSON.stringify(cart));
+updateCartUI();
+showNotification('Product added to cart');
+}
+function updateCartUI() {
+const cartCount = document.querySelector('.ri-shopping-cart-line').nextElementSibling;
+const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+document.querySelector('.text-lg.font-bold.text-primary').textContent = `₵${total.toFixed(2)}`;
+}
+function showNotification(message) {
+const notification = document.createElement('div');
+notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-300 translate-y-0';
+notification.textContent = message;
+document.body.appendChild(notification);
+setTimeout(() => {
+notification.classList.add('translate-y-full');
+setTimeout(() => notification.remove(), 300);
+}, 2000);
+}
+document.querySelectorAll('[class*="Add to Cart"]').forEach(button => {
+button.addEventListener('click', function(e) {
+const productCard = e.target.closest('[class*="border-gray-200"]');
+const product = {
+id: Math.random().toString(36).substr(2, 9),
+name: productCard.querySelector('h3').textContent,
+price: parseFloat(productCard.querySelector('[class*="text-primary"]').textContent.replace('₵', '')),
+image: productCard.querySelector('img').src
+};
+updateCart(product);
+});
+});
+const checkoutButtons = Array.from(document.getElementsByTagName('button')).find(button => button.textContent.trim() === 'Checkout');
+if (checkoutButtons) {
+checkoutButtons.addEventListener('click', function() {
+if (cart.length === 0) {
+showNotification('Your cart is empty');
+return;
+}
+// Implement checkout logic here
+showNotification('Proceeding to checkout...');
+});
+}
+});
+</script>
+<script id="favorites-management">
+document.addEventListener('DOMContentLoaded', function() {
+let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+function toggleFavorite(productId, button) {
+const index = favorites.indexOf(productId);
+if (index > -1) {
+favorites.splice(index, 1);
+button.querySelector('i').classList.replace('ri-heart-fill', 'ri-heart-line');
+} else {
+favorites.push(productId);
+button.querySelector('i').classList.replace('ri-heart-line', 'ri-heart-fill');
+}
+localStorage.setItem('favorites', JSON.stringify(favorites));
+showNotification(index > -1 ? 'Removed from favorites' : 'Added to favorites');
+}
+document.querySelectorAll('.ri-heart-fill, .ri-heart-line').forEach(heart => {
+const button = heart.closest('button');
+if (button) {
+button.addEventListener('click', function(e) {
+e.preventDefault();
+const productId = this.closest('[class*="items-center"]').querySelector('p').textContent;
+toggleFavorite(productId, this);
+});
+}
+});
+});
+</script>
+<script id="search-management">
+document.addEventListener('DOMContentLoaded', function() {
+const searchInput = document.querySelector('input[placeholder*="Search"]');
+let searchTimeout;
+searchInput.addEventListener('input', function(e) {
+clearTimeout(searchTimeout);
+searchTimeout = setTimeout(() => {
+const query = e.target.value.toLowerCase();
+if (query.length > 2) {
+// Save search if not already saved
+const searches = JSON.parse(localStorage.getItem('saved_searches')) || [];
+if (!searches.includes(query)) {
+searches.push(query);
+localStorage.setItem('saved_searches', JSON.stringify(searches));
+}
+}
+}, 1000);
+});
+document.querySelectorAll('.ri-search-line').forEach(searchIcon => {
+const button = searchIcon.closest('button');
+if (button) {
+button.addEventListener('click', function() {
+const searchQuery = this.closest('.flex').querySelector('p').textContent;
+searchInput.value = searchQuery;
+searchInput.focus();
+});
+}
+});
+});
+</script>
+</body>
+</html>
